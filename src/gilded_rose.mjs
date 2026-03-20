@@ -9,7 +9,7 @@ export class Item {
 export class Shop {
   static SULFURAS = "Sulfuras, Hand of Ragnaros";
   static AGED_BRIE = "Aged Brie";
-  static TAFKA = "Backstage passes to a TAFKAL80ETC concert";
+  static TAFKAL80ETC = "Backstage passes to a TAFKAL80ETC concert";
 
   constructor(items = []) {
     this.items = items;
@@ -20,7 +20,7 @@ export class Shop {
       case Shop.SULFURAS:
         // Legendary item, stay the same
         return item;
-      case Shop.TAFKA:
+      case Shop.TAFKAL80ETC:
         // Concert ticket gets more expensive over time
         if (item.quality < 50) {
           item.quality += 1;
