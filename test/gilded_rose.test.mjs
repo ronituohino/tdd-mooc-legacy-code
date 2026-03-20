@@ -1,4 +1,4 @@
-import { describe, test, beforeEach } from "vitest";
+import { describe, test } from "vitest";
 import { expect } from "chai";
 import { Item, Shop } from "../src/gilded_rose.mjs";
 
