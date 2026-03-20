@@ -18,13 +18,11 @@ export class Shop {
   updateQuality() {
     for (var i = 0; i < this.items.length; i++) {
       const item = this.items[i];
-      if (item.name != Shop.AGED_BRIE && item.name != Shop.TAFKA) {
-        if (item.quality > 0) {
-          if (item.name != Shop.SULFURAS) {
-            this.items[i].quality -= 1;
-          }
-        }
-      } else {
+      if (![Shop.AGED_BRIE, Shop.SULFURAS, Shop.TAFKA].includes(item.name) && item.quality > 0) {
+        this.items[i].quality -= 1;
+      }
+
+      if ([Shop.AGED_BRIE, Shop.TAFKA].includes(item.name)) {
         if (this.items[i].quality < 50) {
           this.items[i].quality += 1;
           if (this.items[i].name == Shop.TAFKA) {
