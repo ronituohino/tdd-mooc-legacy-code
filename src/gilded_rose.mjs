@@ -21,27 +21,23 @@ export class Shop {
       if (![Shop.AGED_BRIE, Shop.SULFURAS, Shop.TAFKA].includes(item.name) && item.quality > 0) {
         this.items[i].quality -= 1;
       }
+      if ([Shop.AGED_BRIE, Shop.TAFKA].includes(item.name) && item.quality < 50) {
+        this.items[i].quality += 1;
+      }
 
-      if ([Shop.AGED_BRIE, Shop.TAFKA].includes(item.name)) {
-        if (this.items[i].quality < 50) {
+      if (item.name == Shop.TAFKA) {
+        if (item.sellIn < 11 && this.items[i].quality < 50) {
           this.items[i].quality += 1;
-          if (this.items[i].name == Shop.TAFKA) {
-            if (this.items[i].sellIn < 11) {
-              if (this.items[i].quality < 50) {
-                this.items[i].quality += 1;
-              }
-            }
-            if (this.items[i].sellIn < 6) {
-              if (this.items[i].quality < 50) {
-                this.items[i].quality += 1;
-              }
-            }
-          }
+        }
+        if (item.sellIn < 6 && this.items[i].quality < 50) {
+          this.items[i].quality += 1;
         }
       }
+
       if (this.items[i].name != Shop.SULFURAS) {
         this.items[i].sellIn -= 1;
       }
+
       if (this.items[i].sellIn < 0) {
         if (this.items[i].name != Shop.AGED_BRIE) {
           if (this.items[i].name != Shop.TAFKA) {
