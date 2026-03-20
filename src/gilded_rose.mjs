@@ -1,8 +1,9 @@
 export class Item {
-  constructor(name, sellIn, quality) {
+  constructor(name, sellIn, quality, conjured) {
     this.name = name;
     this.sellIn = sellIn;
     this.quality = quality;
+    this.conjured = conjured || false;
   }
 }
 
@@ -58,10 +59,18 @@ export class Shop {
         if (item.quality > this.MIN_QUALITY) {
           item.quality -= 1;
         }
+        if (item.conjured && item.quality > this.MIN_QUALITY) {
+          item.quality -= 1;
+        }
         item.sellIn -= 1;
         // Past sell date
-        if (item.sellIn < 0 && item.quality > this.MIN_QUALITY) {
-          item.quality -= 1;
+        if (item.sellIn < 0) {
+          if (item.quality > this.MIN_QUALITY) {
+            item.quality -= 1;
+          }
+          if (item.conjured && item.quality > this.MIN_QUALITY) {
+            item.quality -= 1;
+          }
         }
         return item;
     }

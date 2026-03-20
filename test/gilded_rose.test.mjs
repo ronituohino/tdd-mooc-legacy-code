@@ -111,4 +111,20 @@ describe("Gilded Rose", () => {
     ];
     expect(items).to.deep.equal(expectedResult);
   });
+  test("conjured items can exist", () => {
+    const item = new Item("cursed dagger", 10, 10, true);
+    expect(item.conjured).to.be.true;
+  });
+  test("conjured items lose quality twice as fast before expiry", () => {
+    const gildedRose = new Shop([new Item("cursed dagger", 2, 10, true)]);
+    const items = gildedRose.updateQuality();
+    const expectedResult = [new Item("cursed dagger", 1, 8, true)];
+    expect(items).to.deep.equal(expectedResult);
+  });
+  test("conjured items lose quality four times as fast after expiry", () => {
+    const gildedRose = new Shop([new Item("cursed dagger", -1, 10, true)]);
+    const items = gildedRose.updateQuality();
+    const expectedResult = [new Item("cursed dagger", -2, 6, true)];
+    expect(items).to.deep.equal(expectedResult);
+  });
 });
