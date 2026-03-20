@@ -7,7 +7,7 @@ describe("Gilded Rose", () => {
     const gildedRose = new Shop();
     expect(gildedRose.items).to.deep.equal([]);
   });
-  test("does something with Aged Brie", () => {
+  test("makes Aged Brie better after expiry", () => {
     const gildedRose = new Shop([
       new Item("Aged Brie", -1, 0),
       new Item("Aged Brie", -1, 10),
@@ -15,6 +15,8 @@ describe("Gilded Rose", () => {
       new Item("Aged Brie", 0, 10),
       new Item("Aged Brie", 0, 50),
       new Item("Aged Brie", 0, 90),
+      new Item("Aged Brie", 1, 20),
+      new Item("Aged Brie", 0, 20),
     ]);
     const items = gildedRose.updateQuality();
     const expectedResult = [
@@ -24,10 +26,12 @@ describe("Gilded Rose", () => {
       new Item("Aged Brie", -1, 12),
       new Item("Aged Brie", -1, 50),
       new Item("Aged Brie", -1, 90),
+      new Item("Aged Brie", 0, 21),
+      new Item("Aged Brie", -1, 22),
     ];
     expect(items).to.deep.equal(expectedResult);
   });
-  test("does something with Sulfuras, Hand of Ragnaros", () => {
+  test("does nothing with Sulfuras, Hand of Ragnaros", () => {
     const gildedRose = new Shop([
       new Item("Sulfuras, Hand of Ragnaros", -1, 0),
       new Item("Sulfuras, Hand of Ragnaros", 0, 0),
@@ -47,7 +51,7 @@ describe("Gilded Rose", () => {
     ];
     expect(items).to.deep.equal(expectedResult);
   });
-  test("does something with Backstage passes to a TAFKAL80ETC concert", () => {
+  test("increases Backstage passes to a TAFKAL80ETC concert fast but sets to 0 after concert", () => {
     const gildedRose = new Shop([
       new Item("Backstage passes to a TAFKAL80ETC concert", -1, 10),
       new Item("Backstage passes to a TAFKAL80ETC concert", 0, 10),
@@ -87,7 +91,7 @@ describe("Gilded Rose", () => {
     ];
     expect(items).to.deep.equal(expectedResult);
   });
-  test("does something with foo", () => {
+  test("reduces quality with normal items, twice as fast after expiry", () => {
     const gildedRose = new Shop([
       new Item("foo", 1, -1),
       new Item("foo", -1, 0),
