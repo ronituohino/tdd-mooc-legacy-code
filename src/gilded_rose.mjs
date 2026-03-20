@@ -42,14 +42,11 @@ export class Shop {
         if (item.name === Shop.AGED_BRIE && item.quality < 50) {
           item.quality += 1;
         }
-        if (item.name !== Shop.AGED_BRIE) {
-          if (item.name === Shop.TAFKA) {
-            item.quality = 0;
-          }
-
-          if (item.name !== Shop.SULFURAS && item.quality > 0) {
-            item.quality -= 1;
-          }
+        if (item.name === Shop.TAFKA) {
+          item.quality = 0;
+        }
+        if (item.name !== Shop.AGED_BRIE && item.name !== Shop.SULFURAS && item.quality > 0) {
+          item.quality -= 1;
         }
       }
       this.items[i] = item;
