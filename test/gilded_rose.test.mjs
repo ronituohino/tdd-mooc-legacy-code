@@ -89,17 +89,21 @@ describe("Gilded Rose", () => {
   });
   test("does something with foo", () => {
     const gildedRose = new Shop([
+      new Item("foo", 1, -1),
       new Item("foo", -1, 0),
       new Item("foo", 0, 0),
       new Item("foo", 0, 60),
       new Item("foo", 1, 0),
+      new Item("foo", 1, 70),
     ]);
     const items = gildedRose.updateQuality();
     const expectedResult = [
+      new Item("foo", 0, -1),
       new Item("foo", -2, 0),
       new Item("foo", -1, 0),
       new Item("foo", -1, 58),
       new Item("foo", 0, 0),
+      new Item("foo", 0, 69),
     ];
     expect(items).to.deep.equal(expectedResult);
   });

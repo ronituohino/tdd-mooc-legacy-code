@@ -20,7 +20,7 @@ export class Shop {
       return item;
     }
 
-    if (![Shop.AGED_BRIE, Shop.SULFURAS, Shop.TAFKA].includes(item.name) && item.quality > 0) {
+    if (![Shop.AGED_BRIE, Shop.TAFKA].includes(item.name) && item.quality > 0) {
       item.quality -= 1;
     }
     if ([Shop.AGED_BRIE, Shop.TAFKA].includes(item.name) && item.quality < 50) {
@@ -36,10 +36,9 @@ export class Shop {
       }
     }
 
-    if (item.name !== Shop.SULFURAS) {
-      item.sellIn -= 1;
-    }
+    item.sellIn -= 1;
 
+    // Past sell date
     if (item.sellIn < 0) {
       if (item.name === Shop.AGED_BRIE && item.quality < 50) {
         item.quality += 1;
@@ -47,7 +46,7 @@ export class Shop {
       if (item.name === Shop.TAFKA) {
         item.quality = 0;
       }
-      if (item.name !== Shop.AGED_BRIE && item.name !== Shop.SULFURAS && item.quality > 0) {
+      if (item.name !== Shop.AGED_BRIE && item.quality > 0) {
         item.quality -= 1;
       }
     }
