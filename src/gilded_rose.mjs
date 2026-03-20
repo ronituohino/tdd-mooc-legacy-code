@@ -17,38 +17,48 @@ export class Shop {
 
   updateItem(item) {
     if (item.name === Shop.SULFURAS) {
+      // Legendary item, stay the same
       return item;
     }
-
-    if (![Shop.AGED_BRIE, Shop.TAFKA].includes(item.name) && item.quality > 0) {
-      item.quality -= 1;
-    }
-    if ([Shop.AGED_BRIE, Shop.TAFKA].includes(item.name) && item.quality < 50) {
-      item.quality += 1;
-    }
-
     if (item.name === Shop.TAFKA) {
+      // Concert ticket gets more expensive over time
+      if (item.quality < 50) {
+        item.quality += 1;
+      }
       if (item.sellIn < 11 && item.quality < 50) {
         item.quality += 1;
       }
       if (item.sellIn < 6 && item.quality < 50) {
         item.quality += 1;
       }
-    }
-
-    item.sellIn -= 1;
-
-    // Past sell date
-    if (item.sellIn < 0) {
-      if (item.name === Shop.AGED_BRIE && item.quality < 50) {
-        item.quality += 1;
-      }
-      if (item.name === Shop.TAFKA) {
+      item.sellIn -= 1;
+      // Except after the concert the quality is 0
+      if (item.sellIn < 0) {
         item.quality = 0;
       }
-      if (item.name !== Shop.AGED_BRIE && item.quality > 0) {
-        item.quality -= 1;
+      return item;
+    }
+    if (item.name === Shop.AGED_BRIE) {
+      // Actually gets better over time
+      if (item.quality < 50) {
+        item.quality += 1;
       }
+      item.sellIn -= 1;
+      // And twice as fast after expiry
+      if (item.sellIn < 0 && item.quality < 50) {
+        item.quality += 1;
+      }
+      return item;
+    }
+
+    // Normal items
+    if (item.quality > 0) {
+      item.quality -= 1;
+    }
+    item.sellIn -= 1;
+    // Past sell date
+    if (item.sellIn < 0 && item.quality > 0) {
+      item.quality -= 1;
     }
     return item;
   }
